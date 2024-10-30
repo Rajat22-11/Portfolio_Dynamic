@@ -7,7 +7,8 @@ export default function About() {
   useEffect(() => {
     async function fetchAbout() {
       try {
-        const response = await fetch("http://localhost:5000/about"); // Adjust URL if necessary
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/about`);
+        if (!response.ok) throw new Error("Failed to fetch about data");
         const data = await response.json();
         setAbout(data);
       } catch (error) {

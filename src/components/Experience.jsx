@@ -3,22 +3,33 @@ import { motion } from "framer-motion";
 
 export default function Experience() {
     const [experiences, setExperiences] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         async function fetchExperiences() {
             try {
-                const response = await fetch("http://localhost:5000/experiences"); // Update URL as needed
+                const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/experiences`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
                 const data = await response.json();
                 setExperiences(data);
             } catch (error) {
-                console.error("Error fetching experiences:", error);
+                setError(error.message);
+            } finally {
+                setLoading(false);
             }
         }
         fetchExperiences();
     }, []);
 
-    if (experiences.length === 0) {
+    if (loading) {
         return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error fetching experiences: {error}</div>;
     }
 
     return (

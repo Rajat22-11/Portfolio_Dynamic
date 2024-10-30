@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import path from 'path'; // Import path to serve static files
+import path from 'path';
 import About from './src/models/About.js';
 import Hero from './src/models/Hero.js';
 import Experience from './src/models/Experience.js';
@@ -12,11 +12,11 @@ import Settings from './src/models/Settings.js';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000; // Use Render's assigned port
+const PORT = process.env.PORT || 5000;
 const MONGO_URL = process.env.VITE_MONGO_URI;
 
 // Connect to MongoDB
-mongoose.connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGO_URL)
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.log('Error connecting to MongoDB:', err));
 

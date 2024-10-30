@@ -4,11 +4,12 @@ import { motion } from 'framer-motion';
 export default function Projects() {
   const [projects, setProjects] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch('http://localhost:5000/projects'); // Adjust URL if necessary
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/projects`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -16,11 +17,17 @@ export default function Projects() {
         setProjects(data);
       } catch (error) {
         setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchProjects();
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   if (error) {
     return <div>Error: {error}</div>;

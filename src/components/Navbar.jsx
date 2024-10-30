@@ -20,7 +20,7 @@ export default function Navbar() {
     useEffect(() => {
         async function fetchResumeLink() {
             try {
-                const response = await fetch('http://localhost:5000/resume'); // Replace with your backend API URL
+                const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/resume`);
                 const data = await response.json();
                 setResumeLink(data.resumeLink);
             } catch (error) {
